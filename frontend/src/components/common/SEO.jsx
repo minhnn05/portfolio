@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
 
-/**
- * SEO component — cập nhật <title> và meta tags.
- * Không dùng thêm library vì Vite SPA đơn giản.
- */
 export default function SEO({ title, description, image, url }) {
   const siteName = 'Minh Portfolio';
   const fullTitle = title ? `${title} | ${siteName}` : siteName;

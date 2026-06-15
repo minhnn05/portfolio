@@ -1,10 +1,5 @@
-/**
- * Format ISO date string thành dạng dễ đọc.
- */
-
 const VI_LOCALE = 'vi-VN';
 
-/** "15 tháng 6, 2026" */
 export function formatDate(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString(VI_LOCALE, {
@@ -14,7 +9,6 @@ export function formatDate(iso) {
   });
 }
 
-/** "15/06/2026" */
 export function formatDateShort(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString(VI_LOCALE, {
@@ -24,7 +18,6 @@ export function formatDateShort(iso) {
   });
 }
 
-/** "15 th6, 2026" — dùng cho blog card */
 export function formatDateCompact(iso) {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString(VI_LOCALE, {
@@ -34,7 +27,6 @@ export function formatDateCompact(iso) {
   });
 }
 
-/** Relative time: "3 ngày trước" */
 export function timeAgo(iso) {
   if (!iso) return '';
   const diff = Date.now() - new Date(iso).getTime();
