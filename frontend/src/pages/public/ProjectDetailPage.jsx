@@ -10,6 +10,7 @@ import SEO from '../../components/common/SEO';
 import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import MarkdownRenderer from '../../components/common/MarkdownRenderer';
 import { useProject } from '../../hooks/useProjects';
 import { formatDate } from '../../utils/formatDate';
 
@@ -96,12 +97,10 @@ export default function ProjectDetailPage() {
                 </div>
               </div>
 
-              {/* Description (Markdown rendered as pre for now) */}
-              <div className="prose prose-invert prose-zinc max-w-none">
+              {/* Description */}
+              <div>
                 <h2 className="text-xl font-semibold text-white mb-4">Mô tả</h2>
-                <div className="text-zinc-400 leading-relaxed whitespace-pre-wrap">
-                  {project.description}
-                </div>
+                <MarkdownRenderer content={project.description} />
               </div>
 
               {/* Meta */}

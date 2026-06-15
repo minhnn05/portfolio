@@ -4,14 +4,15 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import ProtectedRoute from './ProtectedRoute';
 
 // ── Public pages (lazy) ───────────────────────────────────────────────────────
-const HomePage         = lazy(() => import('../pages/public/HomePage'));
-const ProjectsPage     = lazy(() => import('../pages/public/ProjectsPage'));
+const HomePage          = lazy(() => import('../pages/public/HomePage'));
+const ProjectsPage      = lazy(() => import('../pages/public/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('../pages/public/ProjectDetailPage'));
-const BlogPage         = lazy(() => import('../pages/public/BlogPage'));
-const BlogDetailPage   = lazy(() => import('../pages/public/BlogDetailPage'));
-const SkillsPage       = lazy(() => import('../pages/public/SkillsPage'));
-const AboutPage        = lazy(() => import('../pages/public/AboutPage'));
-const ContactPage      = lazy(() => import('../pages/public/ContactPage'));
+const BlogPage          = lazy(() => import('../pages/public/BlogPage'));
+const BlogDetailPage    = lazy(() => import('../pages/public/BlogDetailPage'));
+const SkillsPage        = lazy(() => import('../pages/public/SkillsPage'));
+const AboutPage         = lazy(() => import('../pages/public/AboutPage'));
+const ContactPage       = lazy(() => import('../pages/public/ContactPage'));
+const NotFoundPage      = lazy(() => import('../pages/public/NotFoundPage'));
 
 // ── Admin pages (lazy) ────────────────────────────────────────────────────────
 const AdminLoginPage   = lazy(() => import('../pages/admin/AdminLoginPage'));
@@ -56,7 +57,7 @@ export default function AppRouter() {
           </Route>
 
           {/* ── 404 ─────────────────────────────────────────────────────── */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

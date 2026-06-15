@@ -5,6 +5,7 @@ import SEO from '../../components/common/SEO';
 import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import MarkdownRenderer from '../../components/common/MarkdownRenderer';
 import TagBadge from '../../components/blog/TagBadge';
 import { useBlog } from '../../hooks/useBlogs';
 import { blogService } from '../../services/blogService';
@@ -81,11 +82,7 @@ export default function BlogDetailPage() {
               )}
 
               {/* Content */}
-              <div className="prose prose-invert prose-zinc max-w-none">
-                <div className="text-zinc-300 leading-relaxed whitespace-pre-wrap">
-                  {blog.content}
-                </div>
-              </div>
+              <MarkdownRenderer content={blog.content} />
 
               {/* Like button */}
               <div className="mt-12 flex justify-center">

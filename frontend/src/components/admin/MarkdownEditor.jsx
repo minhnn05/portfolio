@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Eye, PenLine } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import MarkdownRenderer from '../common/MarkdownRenderer';
 
 export default function MarkdownEditor({ value, onChange, placeholder, rows = 16 }) {
   const [mode, setMode] = useState('write'); // write | preview
@@ -42,14 +43,13 @@ export default function MarkdownEditor({ value, onChange, placeholder, rows = 16
         />
       ) : (
         <div
-          className="min-h-[200px] px-4 py-3 bg-zinc-900 text-zinc-200 text-sm prose prose-invert prose-zinc max-w-none overflow-auto"
+          className="px-4 py-3 bg-zinc-900 overflow-auto"
           style={{ minHeight: `${rows * 1.5}rem` }}
         >
           {value ? (
-            /* Render markdown as preformatted for now — swap for react-markdown if added */
-            <pre className="whitespace-pre-wrap font-sans text-zinc-300 leading-relaxed">{value}</pre>
+            <MarkdownRenderer content={value} />
           ) : (
-            <p className="text-zinc-600 italic">Không có nội dung để preview.</p>
+            <p className="text-zinc-600 italic text-sm">Không có nội dung để preview.</p>
           )}
         </div>
       )}
