@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, FileText, MessageSquare, LogOut } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, FileText, MessageSquare, Wrench, LogOut } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useAuthStore } from '../../store/authStore';
 
@@ -7,6 +7,7 @@ const LINKS = [
   { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/admin/projects',  icon: FolderKanban,    label: 'Projects'  },
   { to: '/admin/blogs',     icon: FileText,         label: 'Blogs'     },
+  { to: '/admin/skills',    icon: Wrench,           label: 'Skills'    },
   { to: '/admin/messages',  icon: MessageSquare,    label: 'Messages'  },
 ];
 

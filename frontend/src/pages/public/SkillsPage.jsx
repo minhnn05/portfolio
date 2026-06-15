@@ -1,22 +1,12 @@
-import { useEffect, useState } from 'react';
 import SEO from '../../components/common/SEO';
 import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 import SkillGroup from '../../components/skills/SkillGroup';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { skillService } from '../../services/skillService';
+import { useSkillsGrouped } from '../../hooks/useSkills';
 
 export default function SkillsPage() {
-  const [groups, setGroups] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    skillService.getGrouped()
-      .then(setGroups)
-      .catch(setError)
-      .finally(() => setIsLoading(false));
-  }, []);
+  const { groups, isLoading, error } = useSkillsGrouped();
 
   return (
     <>

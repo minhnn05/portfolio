@@ -19,6 +19,7 @@ const AdminDashboard   = lazy(() => import('../pages/admin/AdminDashboard'));
 const AdminProjects    = lazy(() => import('../pages/admin/AdminProjects'));
 const AdminBlogs       = lazy(() => import('../pages/admin/AdminBlogs'));
 const AdminMessages    = lazy(() => import('../pages/admin/AdminMessages'));
+const AdminSkills      = lazy(() => import('../pages/admin/AdminSkills'));
 
 const Fallback = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -50,6 +51,7 @@ export default function AppRouter() {
             <Route path="/admin/dashboard"   element={<AdminDashboard />} />
             <Route path="/admin/projects"    element={<AdminProjects />} />
             <Route path="/admin/blogs"       element={<AdminBlogs />} />
+            <Route path="/admin/skills"      element={<AdminSkills />} />
             <Route path="/admin/messages"    element={<AdminMessages />} />
           </Route>
 

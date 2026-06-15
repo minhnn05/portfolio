@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
 import Sidebar from '../../components/admin/Sidebar';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { projectService } from '../../services/projectService';
+import { slugify } from '../../utils/slugify';
 
 function ProjectRow({ project, onEdit, onDelete, onTogglePublish }) {
   return (
@@ -63,7 +64,17 @@ export default function AdminProjects() {
 
   useEffect(load, [page]);
 
-  const setField = (f) => (e) => setForm((v) => ({ ...v, [f]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+  const setField = (f) => (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setForm((v) => {
+      const next = { ...v, [f]: value };
+      // auto-generate slug khi title thay đổi và slug chưa được chỉnh tay
+      if (f === 'title' && !editingId) {
+        next.slug = slugify(value);
+      }
+      return next;
+    });
+  };
 
   const openNew = () => { setForm(EMPTY_FORM); setEditingId(null); setError(''); setShowForm(true); };
   const openEdit = (p) => {

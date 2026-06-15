@@ -5,6 +5,7 @@ import MarkdownEditor from '../../components/admin/MarkdownEditor';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { blogService } from '../../services/blogService';
 import { formatDateShort } from '../../utils/formatDate';
+import { slugify } from '../../utils/slugify';
 
 const EMPTY_FORM = {
   title: '', excerpt: '', content: '', cover_image_url: '',
@@ -29,7 +30,16 @@ export default function AdminBlogs() {
 
   useEffect(load, [page]);
 
-  const setField = (f) => (e) => setForm((v) => ({ ...v, [f]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+  const setField = (f) => (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setForm((v) => {
+      const next = { ...v, [f]: value };
+      if (f === 'title' && !editingId) {
+        next.slug = slugify(value);
+      }
+      return next;
+    });
+  };
   const setContent = (val) => setForm((v) => ({ ...v, content: val }));
 
   const openNew = () => { setForm(EMPTY_FORM); setEditingId(null); setError(''); setShowForm(true); };

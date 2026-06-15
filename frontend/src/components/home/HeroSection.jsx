@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]" fill="currentColor" aria-hidden="true">
@@ -77,9 +77,9 @@ export default function HeroSection() {
         {/* Social links */}
         <div className="flex items-center justify-center gap-4">
           {[
-            { href: 'https://github.com/yourusername', icon: GithubIcon,   label: 'GitHub'   },
+            { href: 'https://github.com/nNm205', icon: GithubIcon,   label: 'GitHub'   },
             { href: 'https://linkedin.com/in/you',     icon: LinkedinIcon, label: 'LinkedIn' },
-            { href: 'mailto:you@email.com',            icon: Mail,         label: 'Email'    },
+            { href: 'mailto:minh2m5@gmail.com',            icon: Mail,         label: 'Email'    },
           ].map(({ href, icon: Icon, label }) => (
             <a
               key={href}

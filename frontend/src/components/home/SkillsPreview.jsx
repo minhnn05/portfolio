@@ -1,19 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { skillService } from '../../services/skillService';
+import { useSkillsGrouped } from '../../hooks/useSkills';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 export default function SkillsPreview() {
-  const [groups, setGroups] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    skillService.getGrouped()
-      .then(setGroups)
-      .catch(() => setGroups([]))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const { groups, isLoading } = useSkillsGrouped();
 
   if (isLoading) return <div className="flex justify-center py-16"><LoadingSpinner /></div>;
   if (!groups.length) return null;
