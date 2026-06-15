@@ -6,6 +6,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from app.config.settings import get_settings
 from app.config.database import connect_db, disconnect_db, create_tables
+import app.models  # noqa: F401 — register all models into Base.metadata
 
 logging.basicConfig(
     level=logging.INFO,
