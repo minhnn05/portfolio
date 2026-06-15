@@ -1,12 +1,12 @@
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from app.config.settings import get_settings
 from app.config.database import connect_db, disconnect_db, create_tables
-import app.models  # noqa: F401 — register all models into Base.metadata
+import app.models 
 
 logging.basicConfig(
     level=logging.INFO,
@@ -70,13 +70,14 @@ if not settings.DEBUG:
         allowed_hosts=["yourdomain.com", "*.yourdomain.com"],
     )
 
-# from app.routers import projects, blogs, skills, messages, auth
-#
-# app.include_router(auth.router,     prefix=f"{settings.API_PREFIX}/auth",     tags=["Auth"])
-# app.include_router(projects.router, prefix=f"{settings.API_PREFIX}/projects", tags=["Projects"])
-# app.include_router(blogs.router,    prefix=f"{settings.API_PREFIX}/blogs",    tags=["Blogs"])
-# app.include_router(skills.router,   prefix=f"{settings.API_PREFIX}/skills",   tags=["Skills"])
-# app.include_router(messages.router, prefix=f"{settings.API_PREFIX}/messages", tags=["Messages"])
+# ── Routers ───────────────────────────────────────────────────────────────────
+from app.routers import auth, blogs, messages, projects, skills  # noqa: E402
+
+app.include_router(auth.router,     prefix=f"{settings.API_PREFIX}/auth",     tags=["Auth"])
+app.include_router(projects.router, prefix=f"{settings.API_PREFIX}/projects", tags=["Projects"])
+app.include_router(blogs.router,    prefix=f"{settings.API_PREFIX}/blogs",    tags=["Blogs"])
+app.include_router(skills.router,   prefix=f"{settings.API_PREFIX}/skills",   tags=["Skills"])
+app.include_router(messages.router, prefix=f"{settings.API_PREFIX}/messages", tags=["Messages"])
 
 @app.get("/", tags=["Health"], summary="Root")
 async def root():
