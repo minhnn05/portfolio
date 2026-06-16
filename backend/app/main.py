@@ -29,6 +29,7 @@ async def lifespan(app: FastAPI):
     await connect_db()
 
     if settings.DEBUG:
+        # Dev only: auto-create tables. Production uses: alembic upgrade head
         await create_tables()
 
     logger.info("✅ Application ready")
