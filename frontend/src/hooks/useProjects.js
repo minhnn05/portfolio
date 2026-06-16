@@ -55,12 +55,19 @@ export function useFeaturedProjects() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetch = () => {
     projectService
       .getFeatured()
       .then(setProjects)
       .catch(() => setProjects([]))
       .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    fetch();
+    // Refetch khi user quay lại tab
+    window.addEventListener('focus', fetch);
+    return () => window.removeEventListener('focus', fetch);
   }, []);
 
   return { projects, isLoading };

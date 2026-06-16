@@ -15,12 +15,15 @@ const ContactPage       = lazy(() => import('../pages/public/ContactPage'));
 const NotFoundPage      = lazy(() => import('../pages/public/NotFoundPage'));
 
 // ── Admin pages (lazy) ────────────────────────────────────────────────────────
-const AdminLoginPage   = lazy(() => import('../pages/admin/AdminLoginPage'));
-const AdminDashboard   = lazy(() => import('../pages/admin/AdminDashboard'));
-const AdminProjects    = lazy(() => import('../pages/admin/AdminProjects'));
-const AdminBlogs       = lazy(() => import('../pages/admin/AdminBlogs'));
-const AdminMessages    = lazy(() => import('../pages/admin/AdminMessages'));
-const AdminSkills      = lazy(() => import('../pages/admin/AdminSkills'));
+const AdminLoginPage    = lazy(() => import('../pages/admin/AdminLoginPage'));
+const AdminDashboard    = lazy(() => import('../pages/admin/AdminDashboard'));
+const AdminProjects     = lazy(() => import('../pages/admin/AdminProjects'));
+const AdminProjectForm  = lazy(() => import('../pages/admin/AdminProjectForm'));
+const AdminBlogs        = lazy(() => import('../pages/admin/AdminBlogs'));
+const AdminBlogForm     = lazy(() => import('../pages/admin/AdminBlogForm'));
+const AdminSkills       = lazy(() => import('../pages/admin/AdminSkills'));
+const AdminSkillForm    = lazy(() => import('../pages/admin/AdminSkillForm'));
+const AdminMessages     = lazy(() => import('../pages/admin/AdminMessages'));
 
 const Fallback = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -48,12 +51,18 @@ export default function AppRouter() {
 
           {/* ── Admin protected ─────────────────────────────────────────── */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/admin"             element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="/admin/dashboard"   element={<AdminDashboard />} />
-            <Route path="/admin/projects"    element={<AdminProjects />} />
-            <Route path="/admin/blogs"       element={<AdminBlogs />} />
-            <Route path="/admin/skills"      element={<AdminSkills />} />
-            <Route path="/admin/messages"    element={<AdminMessages />} />
+            <Route path="/admin"                          element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="/admin/dashboard"               element={<AdminDashboard />} />
+            <Route path="/admin/projects"                element={<AdminProjects />} />
+            <Route path="/admin/projects/new"            element={<AdminProjectForm />} />
+            <Route path="/admin/projects/:id/edit"       element={<AdminProjectForm />} />
+            <Route path="/admin/blogs"                   element={<AdminBlogs />} />
+            <Route path="/admin/blogs/new"               element={<AdminBlogForm />} />
+            <Route path="/admin/blogs/:id/edit"          element={<AdminBlogForm />} />
+            <Route path="/admin/skills"                  element={<AdminSkills />} />
+            <Route path="/admin/skills/new"              element={<AdminSkillForm />} />
+            <Route path="/admin/skills/:id/edit"         element={<AdminSkillForm />} />
+            <Route path="/admin/messages"                element={<AdminMessages />} />
           </Route>
 
           {/* ── 404 ─────────────────────────────────────────────────────── */}

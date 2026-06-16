@@ -20,7 +20,12 @@ engine = create_async_engine(
     max_overflow=10,
     pool_pre_ping=True,
     pool_recycle=3600,
-    connect_args={"statement_cache_size": 0},
+    # Supabase dùng PgBouncer transaction pooler (port 6543)
+    # asyncpg cần statement_cache_size=0 để tắt prepared statements
+    connect_args={
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+    },
 )
 
 AsyncSessionLocal = async_sessionmaker(

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import Logo from './Logo';
 
 const NAV_LINKS = [
   { to: '/',         label: 'Home'     },
@@ -16,6 +17,38 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // Easter egg: click logo 5 lần trong 3 giây
+  const logoClickCount = useRef(0);
+  const logoClickTimer = useRef(null);
+
+  const handleLogoClick = useCallback((e) => {
+    logoClickCount.current += 1;
+    clearTimeout(logoClickTimer.current);
+
+    if (logoClickCount.current >= 5) {
+      logoClickCount.current = 0;
+      navigate('/admin/login');
+      return;
+    }
+
+    logoClickTimer.current = setTimeout(() => {
+      logoClickCount.current = 0;
+    }, 3000);
+  }, [navigate]);
+
+  // Keyboard shortcut: Ctrl+Shift+A
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        navigate('/admin/login');
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [navigate]);
 
   // đóng mobile menu khi đổi route
   useEffect(() => { setIsOpen(false); }, [pathname]);
@@ -40,12 +73,7 @@ export default function Navbar() {
         aria-label="Main navigation"
       >
         {/* Logo */}
-        <Link
-          to="/"
-          className="text-lg font-bold text-white hover:text-violet-400 transition-colors"
-        >
-          &lt;Minh /&gt;
-        </Link>
+        <Logo onClick={handleLogoClick} />
 
         {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-1" role="list">

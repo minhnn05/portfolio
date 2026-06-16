@@ -55,12 +55,18 @@ export function useFeaturedBlogs() {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const fetch = () => {
     blogService
       .getFeatured()
       .then(setBlogs)
       .catch(() => setBlogs([]))
       .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    fetch();
+    window.addEventListener('focus', fetch);
+    return () => window.removeEventListener('focus', fetch);
   }, []);
 
   return { blogs, isLoading };

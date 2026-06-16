@@ -27,12 +27,21 @@ export const useAuthStore = create((set) => ({
   },
 
   fetchMe: async () => {
+    set({ isLoading: true });
     try {
       const data = await authService.me();
-      set({ admin: data });
-    } catch {
-      set({ token: null, admin: null });
-      localStorage.removeItem('access_token');
+      set({ admin: data, isLoading: false });
+    } catch (err) {
+      // Chỉ xóa token khi server trả 401 (token hết hạn / invalid)
+      // Không xóa khi lỗi network / CORS / 5xx
+      const status = err?.response?.status;
+      if (status === 401 || status === 403) {
+        set({ token: null, admin: null, isLoading: false });
+        localStorage.removeItem('access_token');
+      } else {
+        // Lỗi network/khác: giữ token, user vẫn ở lại trang admin
+        set({ isLoading: false });
+      }
     }
   },
 

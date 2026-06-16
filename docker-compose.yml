@@ -1,10 +1,9 @@
-version: '3.9'
-
 networks:
   portfolio-net:
     driver: bridge
 
 services:
+  # ── Backend ─────────────────────────────────────────────────────────────────
   backend:
     build:
       context: ./backend
@@ -14,7 +13,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - ./backend:/app          # hot-reload: thay đổi code → uvicorn tự restart
     restart: unless-stopped
     networks:
       - portfolio-net
@@ -24,13 +23,12 @@ services:
       timeout: 10s
       retries: 3
 
+  # ── Frontend production (nginx + static build) ────────────────────────────
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        # Passed at build time so Vite can embed the API URL into the bundle.
-        # In production change this to your real domain.
         VITE_API_URL: http://localhost:8000/api
     container_name: portfolio-frontend
     ports:
@@ -41,3 +39,24 @@ services:
     restart: unless-stopped
     networks:
       - portfolio-net
+
+  # ── Frontend dev (Vite dev server với hot-reload) ─────────────────────────
+  # Dùng: docker compose --profile dev up
+  frontend-dev:
+    image: node:20-alpine
+    container_name: portfolio-frontend-dev
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules          # anonymous volume để tránh override node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - backend
+    networks:
+      - portfolio-net
+    profiles:
+      - dev                        # chỉ chạy khi gọi --profile dev

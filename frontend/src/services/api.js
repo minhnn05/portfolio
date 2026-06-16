@@ -8,12 +8,21 @@ export const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// ── Request interceptor — đính kèm JWT cho admin requests ────────────────────
+// ── Request interceptor ──────────────────────────────────────────────────────
 api.interceptors.request.use((config) => {
+  // Auth token
   const token = localStorage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  // Disable browser/CDN cache cho tất cả GET requests
+  // → đảm bảo public pages luôn nhận data mới nhất từ server
+  if (config.method === 'get' || !config.method) {
+    config.headers['Cache-Control'] = 'no-cache';
+    config.headers['Pragma']        = 'no-cache';
+  }
+
   return config;
 });
 
@@ -23,7 +32,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token');
-      // redirect về login nếu đang ở admin page
       if (window.location.pathname.startsWith('/admin')) {
         window.location.href = '/admin/login';
       }

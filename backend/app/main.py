@@ -62,13 +62,21 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         settings.FRONTEND_URL,
-        "http://localhost:5173",   
-        "http://localhost:3000",   
+        "http://localhost:5173",
+        "http://localhost:3000",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type", "Accept"],
-    expose_headers=["X-Total-Count"],   
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Cache-Control",
+        "Pragma",
+        "X-Requested-With",
+    ],
+    expose_headers=["X-Total-Count"],
+    max_age=86400,   # cache preflight 24h — giảm số lượng OPTIONS requests
 )
 
 if not settings.DEBUG:
