@@ -12,6 +12,9 @@ export const blogService = {
   getBySlug: (slug) =>
     api.get(`/blogs/${slug}`).then((r) => r.data),
 
+  getRelated: (slug) =>
+    api.get(`/blogs/${slug}/related`).then((r) => r.data),
+
   like: (slug) =>
     api.post(`/blogs/${slug}/like`).then((r) => r.data),
 

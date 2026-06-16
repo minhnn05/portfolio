@@ -16,10 +16,10 @@ const LinkedinIcon = () => (
 );
 
 const INFO = [
-  { icon: Mail,         label: 'Email',    value: 'you@email.com',           href: 'mailto:you@email.com'              },
-  { icon: GithubIcon,   label: 'GitHub',   value: 'github.com/yourusername', href: 'https://github.com/yourusername'   },
-  { icon: LinkedinIcon, label: 'LinkedIn', value: 'linkedin.com/in/you',     href: 'https://linkedin.com/in/you'       },
-  { icon: MapPin,       label: 'Location', value: 'Hà Nội, Việt Nam',        href: null                                },
+  { icon: Mail,         label: 'Email',    value: 'minh2m5@gmail.com',          href: 'mailto:minh2m5@gmail.com'              },
+  { icon: GithubIcon,   label: 'GitHub',   value: 'github.com/nNm205',          href: 'https://github.com/nNm205'             },
+  { icon: LinkedinIcon, label: 'LinkedIn', value: 'linkedin.com/in/minh-dev',   href: 'https://linkedin.com/in/minh-dev'      },
+  { icon: MapPin,       label: 'Location', value: 'Hà Nội, Việt Nam',           href: null                                    },
 ];
 
 export default function ContactPage() {

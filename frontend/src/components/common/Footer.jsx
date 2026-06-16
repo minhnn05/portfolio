@@ -14,9 +14,9 @@ const LinkedinIcon = () => (
 );
 
 const SOCIAL = [
-  { href: 'https://github.com/yourusername', icon: GithubIcon,   label: 'GitHub'   },
-  { href: 'https://linkedin.com/in/you',     icon: LinkedinIcon, label: 'LinkedIn' },
-  { href: 'mailto:you@email.com',            icon: Mail,         label: 'Email'    },
+  { href: 'https://github.com/nNm205',           icon: GithubIcon,   label: 'GitHub'   },
+  { href: 'https://linkedin.com/in/minh-dev',    icon: LinkedinIcon, label: 'LinkedIn' },
+  { href: 'mailto:minh2m5@gmail.com',            icon: Mail,         label: 'Email'    },
 ];
 
 const LINKS = [

@@ -77,9 +77,9 @@ export default function HeroSection() {
         {/* Social links */}
         <div className="flex items-center justify-center gap-4">
           {[
-            { href: 'https://github.com/nNm205', icon: GithubIcon,   label: 'GitHub'   },
-            { href: 'https://linkedin.com/in/you',     icon: LinkedinIcon, label: 'LinkedIn' },
-            { href: 'mailto:minh2m5@gmail.com',            icon: Mail,         label: 'Email'    },
+            { href: 'https://github.com/nNm205',        icon: GithubIcon,   label: 'GitHub'   },
+            { href: 'https://linkedin.com/in/minh-dev', icon: LinkedinIcon, label: 'LinkedIn' },
+            { href: 'mailto:minh2m5@gmail.com',         icon: Mail,         label: 'Email'    },
           ].map(({ href, icon: Icon, label }) => (
             <a
               key={href}

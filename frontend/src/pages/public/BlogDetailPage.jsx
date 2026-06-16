@@ -7,13 +7,15 @@ import Footer from '../../components/common/Footer';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import MarkdownRenderer from '../../components/common/MarkdownRenderer';
 import TagBadge from '../../components/blog/TagBadge';
-import { useBlog } from '../../hooks/useBlogs';
+import BlogCard from '../../components/blog/BlogCard';
+import { useBlog, useRelatedBlogs } from '../../hooks/useBlogs';
 import { blogService } from '../../services/blogService';
 import { formatDate } from '../../utils/formatDate';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
   const { blog, isLoading, error } = useBlog(slug);
+  const { blogs: relatedBlogs } = useRelatedBlogs(slug);
   const [likeCount, setLikeCount] = useState(null);
   const [liked, setLiked] = useState(false);
 
@@ -100,6 +102,18 @@ export default function BlogDetailPage() {
                   {displayLikes} likes
                 </button>
               </div>
+
+              {/* Related blogs */}
+              {relatedBlogs.length > 0 && (
+                <section className="mt-16 pt-12 border-t border-zinc-800">
+                  <h2 className="text-lg font-semibold text-white mb-6">Bài viết liên quan</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    {relatedBlogs.map((b) => (
+                      <BlogCard key={b.id} blog={b} />
+                    ))}
+                  </div>
+                </section>
+              )}
             </article>
           ) : null}
         </div>

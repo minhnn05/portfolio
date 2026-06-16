@@ -53,6 +53,7 @@ export default function AboutPage() {
                   href="/cv.pdf"
                   download
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white text-sm font-medium transition-colors"
+                  // TODO: Replace /cv.pdf with your actual CV file in frontend/public/cv.pdf
                 >
                   <Download size={14} /> Download CV
                 </a>

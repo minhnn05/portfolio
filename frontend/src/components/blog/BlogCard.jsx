@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 import { formatDateCompact } from '../../utils/formatDate';
 import TagBadge from './TagBadge';
 
-export default function BlogCard({ blog, className }) {
+export default function BlogCard({ blog, className, onTagClick }) {
   const {
     title, slug, excerpt, cover_image_url,
     tags = [], category, reading_time_minutes,
@@ -63,7 +63,11 @@ export default function BlogCard({ blog, className }) {
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {tags.slice(0, 3).map((tag) => (
-              <TagBadge key={tag} tag={tag} />
+              <TagBadge
+                key={tag}
+                tag={tag}
+                onClick={onTagClick ? (e) => { e.preventDefault(); onTagClick(tag); } : undefined}
+              />
             ))}
           </div>
         )}

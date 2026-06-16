@@ -65,3 +65,25 @@ export function useFeaturedBlogs() {
 
   return { blogs, isLoading };
 }
+
+/** Fetch related blogs cho BlogDetailPage. */
+export function useRelatedBlogs(slug) {
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    setIsLoading(true);
+
+    blogService
+      .getRelated(slug)
+      .then((res) => { if (!cancelled) setBlogs(res); })
+      .catch(() => { if (!cancelled) setBlogs([]); })
+      .finally(() => { if (!cancelled) setIsLoading(false); });
+
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  return { blogs, isLoading };
+}
