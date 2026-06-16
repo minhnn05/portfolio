@@ -35,6 +35,9 @@ class Settings(BaseSettings):
 
     # ── CORS ─────────────────────────────────────────────
     FRONTEND_URL: str = "http://localhost:5173"
+    # Thêm nhiều origins nếu cần, cách nhau bằng dấu phẩy
+    # Ví dụ: CORS_ORIGINS=https://yourdomain.vercel.app,https://custom-domain.com
+    CORS_ORIGINS: list[str] = []
 
     # ── Trusted hosts (production) ───────────────────────
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
