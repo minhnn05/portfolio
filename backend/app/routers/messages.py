@@ -1,8 +1,13 @@
 from __future__ import annotations
+
 import uuid
+
 from fastapi import APIRouter, BackgroundTasks, Depends, Query, Request
 from fastapi.responses import Response
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.config.database import get_db
+from app.config.limiter import limiter
 from app.middleware.auth_middleware import require_admin
 from app.models.message import Message, MessageStatus
 from app.schemas.message import (
@@ -16,20 +21,22 @@ from app.schemas.message import (
 )
 from app.services import message_service
 from app.services.email_service import notify_new_message
-from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
 # ── Public ────────────────────────────────────────────────────────────────────
+
 @router.post(
     "",
     response_model=ContactFormResponse,
     status_code=201,
     summary="Gửi liên hệ từ contact form",
+    description="Rate limited: 5 requests/minute per IP.",
 )
+@limiter.limit("5/minute")
 async def send_message(
-    body: ContactFormRequest,
     request: Request,
+    body: ContactFormRequest,
     background_tasks: BackgroundTasks,
     db: AsyncSession = Depends(get_db),
 ) -> ContactFormResponse:

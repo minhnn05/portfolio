@@ -1,12 +1,15 @@
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 from app.config.settings import get_settings
 from app.config.database import connect_db, disconnect_db, create_tables
-import app.models 
+from app.config.limiter import limiter  # shared instance — imported by routers
+import app.models  # noqa: F401
 
 logging.basicConfig(
     level=logging.INFO,
@@ -44,11 +47,15 @@ app = FastAPI(
         "Portfolio API — Projects, Blog, Skills, Contact & Admin endpoints. "
         "Built with FastAPI + PostgreSQL (Supabase)."
     ),
-    docs_url="/docs" if settings.DEBUG else None,    
+    docs_url="/docs" if settings.DEBUG else None,
     redoc_url="/redoc" if settings.DEBUG else None,
     openapi_url="/openapi.json" if settings.DEBUG else None,
     lifespan=lifespan,
 )
+
+# Attach rate limiter
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS — cho phép frontend gọi API
 app.add_middleware(
@@ -67,7 +74,7 @@ app.add_middleware(
 if not settings.DEBUG:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["yourdomain.com", "*.yourdomain.com"],
+        allowed_hosts=settings.ALLOWED_HOSTS,
     )
 
 # ── Routers ───────────────────────────────────────────────────────────────────

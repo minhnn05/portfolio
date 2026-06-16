@@ -74,6 +74,9 @@ async def increment_view(db: AsyncSession, slug: str) -> None:
     )
     await db.commit()
 
+# alias used by the projects router
+increment_project_view = increment_view
+
 # ── Admin CRUD ────────────────────────────────────────────────────────────────
 async def get_all_projects(
     db: AsyncSession,

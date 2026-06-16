@@ -129,6 +129,19 @@ async def featured_blogs(
 
 
 @router.get(
+    "/{slug}/related",
+    response_model=list[BlogCardResponse],
+    summary="Bài viết liên quan",
+)
+async def related_blogs(
+    slug: str,
+    db: AsyncSession = Depends(get_db),
+) -> list[Blog]:
+    blog = await blog_service.get_blog_by_slug(db, slug)
+    return await blog_service.get_related_blogs(db, blog, limit=3)
+
+
+@router.get(
     "/{slug}",
     response_model=BlogPublicResponse,
     summary="Chi tiết bài viết theo slug",

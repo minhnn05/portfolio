@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     # ── CORS ─────────────────────────────────────────────
     FRONTEND_URL: str = "http://localhost:5173"
 
+    # ── Trusted hosts (production) ───────────────────────
+    ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
+
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",

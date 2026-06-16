@@ -101,6 +101,9 @@ async def increment_view(db: AsyncSession, slug: str) -> None:
     )
     await db.commit()
 
+# alias used by the blogs router
+increment_blog_view = increment_view
+
 
 async def increment_like(db: AsyncSession, slug: str) -> int:
     await db.execute(
